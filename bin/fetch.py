@@ -236,7 +236,7 @@ print("""<!DOCTYPE html>
     });
   </script>
   <footer>
-    Updated at %s.
+    Updated on %s.
   </footer>
 </body>
 </html>
