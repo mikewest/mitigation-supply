@@ -1,4 +1,17 @@
 <!DOCTYPE html>
+{% macro itemToClass(item) -%}
+  {% if (item["passed"] / item["total"]) < 0.25 %}
+  passes-few
+  {% elif (item["passed"] / item["total"]) < 0.50 %}
+  passes-some
+  {% elif (item["passed"] / item["total"]) < 0.75 %}
+  passes-many
+  {% elif (item["passed"] / item["total"]) < 0.95 %}
+  passes-most
+  {% else %}
+  passes-all
+  {% endif %}
+{%- endmacro %}
 <head>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
@@ -63,6 +76,11 @@
     font-size: 40px;
     color: #FFF;
   }
+    td.passes-few  { color: #e57373; }
+    td.passes-some { color: #ffb74d; }
+    td.passes-many { color: #dce775; }
+    td.passes-most { color: #aed581; }
+    td.passes-all  { color: #81c784; }
 
   footer {
     background: black;
@@ -115,7 +133,7 @@
           <tbody>
             <tr>
               {% for browser, item in wpt_data["csp"].items() %}
-              <td>{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
+              <td class="{{ itemToClass(item) }}">{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
               {% endfor %}
             </tr>
           </tbody>
@@ -155,7 +173,7 @@
           <tbody>
             <tr>
               {% for browser, item in wpt_data["tt"].items() %}
-              <td>{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
+              <td class="{{ itemToClass(item) }}">{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
               {% endfor %}
             </tr>
           </tbody>
@@ -196,7 +214,7 @@
           <tbody>
             <tr>
               {% for browser, item in wpt_data["corp"].items() %}
-              <td>{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
+              <td class="{{ itemToClass(item) }}">{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
               {% endfor %}
             </tr>
           </tbody>
@@ -215,7 +233,7 @@
           <tbody>
             <tr>
               {% for browser, item in wpt_data["coep"].items() %}
-              <td>{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
+              <td class="{{ itemToClass(item) }}">{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
               {% endfor %}
             </tr>
           </tbody>
@@ -234,7 +252,7 @@
           <tbody>
             <tr>
               {% for browser, item in wpt_data["coop"].items() %}
-              <td>{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
+              <td class="{{ itemToClass(item) }}">{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
               {% endfor %}
             </tr>
           </tbody>
