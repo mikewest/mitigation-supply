@@ -13,7 +13,8 @@
   {% endif %}
 {%- endmacro %}
 <head>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@0.5.7/chartjs-plugin-annotation.min.js" integrity="sha256-Olnajf3o9kfkFGloISwP1TslJiWUDd7IYmfC+GdCKd4=" crossorigin="anonymous"></script>
 <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;800&family=Roboto+Slab:wght@100;500&display=swap" rel="stylesheet">
 <style>
@@ -45,7 +46,7 @@
   }
   section {
     max-width:750px;
-    margin: 0 auto;
+    margin: 1em auto;
     background: #111;
   }
 
@@ -261,6 +262,7 @@
   </article>
 
   <script>
+    const colors = { red: "#e41a1c", blue: "#377eb8", green: "#4daf4a", orange: "#ff7f00", purple: "#984ea3" };
     const use_counter_days = {{ use_counter_days|tojson }};
     const use_counter_buckets = {{ use_counter_buckets|tojson }}
     const chart_options = {
@@ -277,6 +279,22 @@
             }
           }
         ]
+      },
+      annotation: {
+        annotations: [{
+          id: 'vline',
+          type: 'line',
+          mode: 'vertical',
+          scaleID: 'x-axis-0',
+          value: use_counter_days.find(v => v == "2020-04-07"),
+          borderColor: colors["orange"],
+          borderWidth: 1,
+          label: {
+            backgroundColor: colors["orange"],
+            content: 'M81',
+            enabled: true
+          }
+        }]
       }
     };
 
@@ -287,17 +305,17 @@
         datasets: [
           {
             label: "All CSP",
-            borderColor: 'rgb(255,99,132)',
+            borderColor: colors["red"],
             data: use_counter_buckets["15"]
           },
           {
             label: "Reasonable CSP",
-            borderColor: 'blue',
+            borderColor: colors["blue"],
             data: use_counter_buckets["3132"]
           },
           {
             label: "Better than Reasonable CSP",
-            borderColor: 'green',
+            borderColor: colors["green"],
             data: use_counter_buckets["3137"]
           }
         ]
@@ -312,12 +330,12 @@
         datasets: [
           {
             label: "Trusted Types",
-            borderColor: 'rgb(255,99,132)',
+            borderColor: colors["red"],
             data: use_counter_buckets["2722"]
           },
           {
             label: "Enforced",
-            borderColor: "green",
+            borderColor: colors["green"],
             data: use_counter_buckets["3160"]
           }
         ]
@@ -332,17 +350,17 @@
         datasets: [
           {
             label: "COOP: same-origin",
-            borderColor: 'rgb(255,99,132)',
+            borderColor: colors["red"],
             data: use_counter_buckets["3197"]
           },
           {
             label: "COEP: require-corp",
-            borderColor: "blue",
+            borderColor: colors["blue"],
             data: use_counter_buckets["3199"]
           },
           {
             label: "Cross-Origin Isolated",
-            borderColor: "green",
+            borderColor: colors["green"],
             data: use_counter_buckets["3200"]
           }
         ]
