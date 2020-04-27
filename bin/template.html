@@ -133,7 +133,7 @@
           <tbody>
             <tr>
               {% for browser, item in wpt_data["csp"].items() %}
-              <td class="{{ itemToClass(item) }}">{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
+              <td class="{{ itemToClass(item) | trim }}">{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
               {% endfor %}
             </tr>
           </tbody>
@@ -173,7 +173,7 @@
           <tbody>
             <tr>
               {% for browser, item in wpt_data["tt"].items() %}
-              <td class="{{ itemToClass(item) }}">{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
+              <td class="{{ itemToClass(item) | trim }}">{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
               {% endfor %}
             </tr>
           </tbody>
@@ -214,7 +214,7 @@
           <tbody>
             <tr>
               {% for browser, item in wpt_data["corp"].items() %}
-              <td class="{{ itemToClass(item) }}">{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
+              <td class="{{ itemToClass(item) | trim }}">{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
               {% endfor %}
             </tr>
           </tbody>
@@ -233,7 +233,7 @@
           <tbody>
             <tr>
               {% for browser, item in wpt_data["coep"].items() %}
-              <td class="{{ itemToClass(item) }}">{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
+              <td class="{{ itemToClass(item) | trim }}">{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
               {% endfor %}
             </tr>
           </tbody>
@@ -252,7 +252,7 @@
           <tbody>
             <tr>
               {% for browser, item in wpt_data["coop"].items() %}
-              <td class="{{ itemToClass(item) }}">{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
+              <td class="{{ itemToClass(item) | trim }}">{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
               {% endfor %}
             </tr>
           </tbody>
@@ -268,7 +268,12 @@
         yAxes: [
           {
             ticks: {
-              beginAtZero: true
+              beginAtZero: true,
+              callback: (v) => { return v + '%'; }
+            },
+            scaleLabel: {
+              display: true,
+              labelString: 'Percentage of Page Views'
             }
           }
         ]
