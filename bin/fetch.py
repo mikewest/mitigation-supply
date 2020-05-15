@@ -20,7 +20,8 @@ use_counters = {
     'CSPWithBetterThanReasonableRestrictions': 3137,
 
     'TrustedTypesEnabled': 2722,
-    'TrustedTypesEnabledEnforcing': 3160
+    'TrustedTypesEnabledEnforcing': 3160,
+    'TrustedTypesEnabledReportOnly': 3161
 }
 
 days = set()
