@@ -301,6 +301,21 @@
             position: "bottom",
             yAdjust: 5
           }
+        }, {
+          id: 'vline',
+          type: 'line',
+          mode: 'vertical',
+          scaleID: 'x-axis-0',
+          value: use_counter_days.find(v => v == "2020-05-19"),
+          borderColor: colors["orange"],
+          borderWidth: 1,
+          label: {
+            backgroundColor: colors["orange"],
+            content: 'M83',
+            enabled: true,
+            position: "bottom",
+            yAdjust: 5
+          }
         }]
       }
     };
