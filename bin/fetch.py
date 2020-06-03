@@ -21,7 +21,9 @@ use_counters = {
 
     'TrustedTypesEnabled': 2722,
     'TrustedTypesEnabledEnforcing': 3160,
-    'TrustedTypesEnabledReportOnly': 3161
+    'TrustedTypesEnabledReportOnly': 3161,
+    'TrustedTypesPolicyCreated': 2723,
+    'TrustedTypesDefaultPolicyCreated': 2724
 }
 
 days = set()
