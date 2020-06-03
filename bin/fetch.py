@@ -31,7 +31,7 @@ for bucket in use_counters.values():
     for item in response:
         days.add(item["date"])
         if item["date"] not in data: data[item["date"]] = {}
-        data[item["date"]][bucket] = item["day_percentage"] * 100
+        data[item["date"]][bucket] = round(item["day_percentage"] * 100, 5)
 
 use_counter_days = sorted(days)[-60:]
 use_counter_buckets = {}
