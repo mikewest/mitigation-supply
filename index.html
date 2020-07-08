@@ -161,6 +161,7 @@
       
     <canvas id="tt_usage"></canvas>
 
+    <canvas id="tt_creation"></canvas>
     <section>
         <h3>
           Web Platform Tests: 
@@ -416,6 +417,22 @@
         ]
       },
       options: chart_options
+    });
+
+    let tt_creation = new Chart(document.querySelector('#tt_creation').getContext('2d'), {
+      type: "line",
+      data: {
+        labels: use_counter_days,
+        datasets: [
+          {
+            label: "Policy Creation",
+            borderColor: colors["red"],
+            data: use_counter_buckets["2723"]
+          }
+        ]
+      },
+      options: chart_options
+
     });
 
     let coop_coep_chart = new Chart(document.querySelector('#coop_coep_usage').getContext('2d'), {
