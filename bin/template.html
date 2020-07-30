@@ -41,6 +41,18 @@
   h2 {
     font: 800 24px/1.2 'Open Sans', sans-serif;
   }
+
+    h2 a, h2 a:visited {
+      margin-left: -24px;
+      margin-right: 4px;
+      text-decoration: none;
+      font-weight: 400;
+      color: #FFF;
+    }
+      h2:hover a, h3:hover a {
+        color: #99F;
+      }
+
   p, ul {
     font: 18px/1.2 'Open Sans', sans-serif;
   }
@@ -103,7 +115,10 @@
 <body>
   <h1>Web Mitigation Metrics</h1>
   <article>
-    <h2>Content Security Policy</h2>
+    <h2 id="csp">
+      <a href="#csp">§</a>
+      Content Security Policy
+    </h2>
     <p>
       We believe that a carefully-crafted
       <a href="https://w3c.github.io/webappsec-csp/">Content Security Policy</a>
@@ -146,7 +161,10 @@
   </article>
 
   <article>
-    <h2>Trusted Types</h2>
+    <h2 id="trusted-types">
+      <a href="#trusted-types">§</a>
+      Trusted Types
+    </h2>
     <p>
       <a href="https://github.com/w3c/webappsec-trusted-types/">Trusted Types</a> give developers
       the ability to avoid the risks of dumping raw strings into DOM methods and setters that can
@@ -187,7 +205,10 @@
   </article>
 
   <article>
-    <h2>Isolation</h2>
+    <h2 id="isolation">
+      <a href="#isolation">§</a>
+      Isolation
+    </h2>
     <p>
       <code>Cross-Origin-Opener-Policy</code> and <code>Cross-Origin-Embedder-Policy</code> help
       developers mitigate the risk of <a href="https://meltdownattack.com/">Spectre</a> and similar
@@ -332,12 +353,12 @@
             data: use_counter_buckets["15"]
           },
           {
-            label: "Reasonable CSP",
+            label: "Strict CSP",
             borderColor: colors["blue"],
             data: use_counter_buckets["3132"]
           },
           {
-            label: "Better than Reasonable CSP",
+            label: "Stricter CSP",
             borderColor: colors["green"],
             data: use_counter_buckets["3137"]
           }
