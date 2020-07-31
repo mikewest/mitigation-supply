@@ -286,6 +286,45 @@
     </section>
   </article>
 
+  <article>
+    <h2 id="fetch-metadata">
+      <a href="#fetch-metadata">§</a>
+      Fetch Metadata
+    </h2>
+    <p>
+      The information provided in the HTTP request headers defined by
+      <a href="https://w3c.github.io/webappsec-fetch-metadata/">Fetch Metadata</a>
+      can give servers the ability to defend themselves from side-channel attacks by making
+      better decisions about which requests to respond to, and which to reject <em>a priori</em>.
+      We believe that a
+      <a href="https://web.dev/fetch-metadata/#how-to-use-fetch-metadata-to-protect-against-cross-origin-attacks">Resource Isolation Policy</a>
+      is a robust approach to some common cross-site vulnerabilities, and we encourage its implementation.
+    </p>
+
+    <section>
+        <h3>
+          Web Platform Tests:
+          <a href="https://wpt.fyi/results/fetch/metadata?label=master&label=experimental&aligned"><code>/fetch/metadata</code></a>
+        </h3>
+        <table>
+          <thead>
+            <tr>
+              {% for browser in wpt_data["fetch-metadata"] %}
+              <th>{{ browser|capitalize }}</th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              {% for browser, item in wpt_data["fetch-metadata"].items() %}
+              <td class="{{ itemToClass(item) | trim }}">{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
+              {% endfor %}
+            </tr>
+          </tbody>
+       </table>
+    </section>
+  </article>
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@0.5.7/chartjs-plugin-annotation.min.js" integrity="sha256-Olnajf3o9kfkFGloISwP1TslJiWUDd7IYmfC+GdCKd4=" crossorigin="anonymous"></script>
   <script>

@@ -52,6 +52,7 @@ wpt_data = {
     "coop": {},
     "corp": {},
     "csp":  {},
+    "fetch-metadata": {},
     "tt":   {}
 }
 
@@ -84,6 +85,8 @@ for item in search_data["results"]:
         test_type = "corp"
     elif item["test"].startswith("/content-security-policy/"):
         test_type = "csp"
+    elif item["test"].startswith("/fetch/metadata/"):
+        test_type = "fetch-metadata"
     elif item["test"].startswith("/trusted-types/"):
         test_type = "tt"
     else:
