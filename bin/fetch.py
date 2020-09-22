@@ -2,6 +2,7 @@ import datetime
 import json
 import requests
 import os
+from datetime import date, timedelta
 from jinja2 import Environment, FileSystemLoader
 
 #
@@ -35,12 +36,19 @@ for bucket in use_counters.values():
         if item["date"] not in data: data[item["date"]] = {}
         data[item["date"]][bucket] = round(item["day_percentage"] * 100, 5)
 
-use_counter_days = sorted(days)[-60:]
+beginning = date.fromisoformat(sorted(days)[-90])
+end = date.fromisoformat(sorted(days)[-1])
+use_counter_days = []
+while beginning <= end:
+    use_counter_days.append(beginning.isoformat())
+    beginning += timedelta(days=1)
+use_counter_days = sorted(use_counter_days)[-90:]
+
 use_counter_buckets = {}
 for bucket in use_counters.values():
     use_counter_buckets[bucket] = []
     for day in use_counter_days:
-        use_counter_buckets[bucket].append(data[day].get(bucket, 0))
+        use_counter_buckets[bucket].append(data.get(day, {}).get(bucket, 0))
 
 #
 # Step 2: Collect WPT data by gathering the most recent aligned run IDs, then using them
