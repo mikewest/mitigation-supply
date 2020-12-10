@@ -287,6 +287,99 @@
     </section>
   </article>
 
+  <!-- SRI -->
+  <article>
+    <h2 id="sri">
+      <a href="#sri">§</a>
+      Subresource Integrity
+    </h2>
+    <p>
+      Developers can ensure that they load only the script and style resources they intend to load,
+      mitigating the risk that an untrusted server could replace it maliciously, by adding
+      <code>integrity</code> attributes to elements as defined in
+      <a href="https://www.w3.org/TR/SRI/">Subresource Integrity</a>. This, especially
+      <a href="https://w3c.github.io/webappsec-csp/#external-hash">in combination with CSP</a> is
+      a powerful tool, which we'd like to encourage folks to use.
+    </p>
+    <p>
+      The data below is gathered from
+      <a href="https://chromestatus.com/metrics/feature/popularity">Chrome's usage statistics</a>,
+      and represents the percentage of Chrome page loads that use SRI successfully, and those that
+      have resources which fail an SRI check.
+    </p>
+      
+    <canvas id="sri_usage"></canvas>
+
+    <section>
+        <h3>
+          Web Platform Tests:
+          <a href="https://wpt.fyi/results/subresource_integrity/?label=master&label=experimental&aligned"><code>/subresource_integrity</code></a>
+        </h3>
+        <table>
+          <thead>
+            <tr>
+              {% for browser in wpt_data["sri"] %}
+              <th>{{ browser|capitalize }}</th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              {% for browser, item in wpt_data["sri"].items() %}
+              <td class="{{ itemToClass(item) | trim }}">{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
+              {% endfor %}
+            </tr>
+          </tbody>
+       </table>
+    </section>
+  </article>
+
+  <!-- Sandbox -->
+  <article>
+    <h2 id="sandbox">
+      <a href="#sandbox">§</a>
+      Sandboxing
+    </h2>
+    <p>
+      Documents can be placed into a sandbox, giving them an opaque origin, and limiting their
+      ability to take certain actions, like navigating the top-level document, execute script,
+      submit forms, and so on. This can be done either via the 
+      <a href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-sandbox"><code>sandbox</code> IFrame attribute</a>
+      or via the <a href="https://w3c.github.io/webappsec-csp/#directive-sandbox"><code>sandbox</code> CSP directive</a>.
+    </p>
+    <p>
+      The data below is gathered from
+      <a href="https://chromestatus.com/metrics/feature/popularity">Chrome's usage statistics</a>,
+      representing the percentage of Chrome page loads that sandbox a document via either IFrame
+      attributes, or CSP directives.
+    </p>
+      
+    <canvas id="sandbox_usage"></canvas>
+
+    <section>
+        <h3>
+          Web Platform Tests:
+          <a href="https://wpt.fyi/results/?label=master&label=experimental&aligned&q=sandbox"><code>?"sandbox"</code></a>
+        </h3>
+        <table>
+          <thead>
+            <tr>
+              {% for browser in wpt_data["sandbox"] %}
+              <th>{{ browser|capitalize }}</th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              {% for browser, item in wpt_data["sandbox"].items() %}
+              <td class="{{ itemToClass(item) | trim }}">{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
+              {% endfor %}
+            </tr>
+          </tbody>
+       </table>
+    </section>
+  </article>
+
   <article>
     <h2 id="fetch-metadata">
       <a href="#fetch-metadata">§</a>
@@ -358,6 +451,36 @@
           label: {
             backgroundColor: colors["orange"],
             content: 'M84',
+            enabled: true,
+            position: "bottom",
+            yAdjust: 5
+          }
+        }, {
+          id: 'm87',
+          type: 'line',
+          mode: 'vertical',
+          scaleID: 'x-axis-0',
+          value: use_counter_days.find(v => v == "2020-11-17"),
+          borderColor: colors["orange"],
+          borderWidth: 1,
+          label: {
+            backgroundColor: colors["orange"],
+            content: 'M87',
+            enabled: true,
+            position: "bottom",
+            yAdjust: 5
+          }
+        }, {
+          id: 'm86',
+          type: 'line',
+          mode: 'vertical',
+          scaleID: 'x-axis-0',
+          value: use_counter_days.find(v => v == "2020-10-06"),
+          borderColor: colors["orange"],
+          borderWidth: 1,
+          label: {
+            backgroundColor: colors["orange"],
+            content: 'M86',
             enabled: true,
             position: "bottom",
             yAdjust: 5
@@ -441,6 +564,47 @@
             borderColor: colors["red"],
             data: use_counter_buckets["2723"]
           }
+        ]
+      },
+      options: chart_options
+
+    });
+
+    let sri_usage = new Chart(document.querySelector('#sri_usage').getContext('2d'), {
+      type: "line",
+      data: {
+        labels: use_counter_days,
+        datasets: [
+          {
+            label: "SRI Validated Resource",
+            borderColor: colors["green"],
+            data: use_counter_buckets["540"]
+          },
+          {
+            label: "SRI Blocked Resource",
+            borderColor: colors["red"],
+            data: use_counter_buckets["541"]
+          },
+        ]
+      },
+      options: chart_options
+    });
+
+    let sandbox_usage = new Chart(document.querySelector('#sandbox_usage').getContext('2d'), {
+      type: "line",
+      data: {
+        labels: use_counter_days,
+        datasets: [
+          {
+            label: "Sandbox via IFrame",
+            borderColor: colors["green"],
+            data: use_counter_buckets["672"]
+          },
+          {
+            label: "Sandbox via CSP",
+            borderColor: colors["red"],
+            data: use_counter_buckets["673"]
+          },
         ]
       },
       options: chart_options

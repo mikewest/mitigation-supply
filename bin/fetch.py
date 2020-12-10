@@ -24,7 +24,13 @@ use_counters = {
     'TrustedTypesEnabledEnforcing': 3160,
     'TrustedTypesEnabledReportOnly': 3161,
     'TrustedTypesPolicyCreated': 2723,
-    'TrustedTypesDefaultPolicyCreated': 2724
+    'TrustedTypesDefaultPolicyCreated': 2724,
+
+    'SRIAllowed': 540,
+    'SRIBlocked': 541,
+    
+    'SandboxViaIFrame': 672,
+    'SandboxViaCSP': 673
 }
 
 days = set()
@@ -61,7 +67,9 @@ wpt_data = {
     "corp": {},
     "csp":  {},
     "fetch-metadata": {},
-    "tt":   {}
+    "tt":   {},
+    "sri":  {},
+    "sandbox": {}
 }
 
 def getWPTRunIDs():
@@ -97,6 +105,10 @@ for item in search_data["results"]:
         test_type = "fetch-metadata"
     elif item["test"].startswith("/trusted-types/"):
         test_type = "tt"
+    elif item["test"].startswith("/subresource-integrity/"):
+        test_type = "sri"
+    elif "sandbox" in item["test"].lower():
+        test_type = "sandbox"
     else:
         continue
 
