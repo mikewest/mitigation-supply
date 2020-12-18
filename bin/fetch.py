@@ -19,6 +19,7 @@ use_counters = {
     'ContentSecurityPolicy': 15,
     'CSPWithReasonableRestrictions': 3132,
     'CSPWithBetterThanReasonableRestrictions': 3137,
+    'CSPEE': 3274,
 
     'TrustedTypesEnabled': 2722,
     'TrustedTypesEnabledEnforcing': 3160,
