@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 {% macro itemToClass(item) -%}
   {% if (item["passed"] / item["total"]) < 0.25 %}
@@ -13,105 +12,34 @@
   passes-all
   {% endif %}
 {%- endmacro %}
+{% macro wpt(feature) -%}
+        <table>
+          <thead>
+            <tr>
+              {% for browser in wpt_data[feature] %}
+              <th>{{ browser|capitalize }}</th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              {% for browser, item in wpt_data[feature].items() %}
+              <td class="{{ itemToClass(item) | trim }}">{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
+              {% endfor %}
+            </tr>
+          </tbody>
+       </table>
+{%- endmacro %}
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Web Mitigation Metrics</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Web Mitigation Metrics</title>
 
-<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;800&family=Roboto+Slab:wght@100;500&display=swap" rel="stylesheet" crossorigin="anonymous">
-<style>
-  body, html {
-    border: 0;
-    margin: 0;
-    padding: 0;
-  }
-  h1 {
-    background: black;
-    color: white;
-    font: 100 40px/1.2 'Roboto Slab', sans-serif;
-    margin: 0 0 40px 0;
-    padding: 40px;
-    text-align: right;
-  }
-  article {
-    max-width: 750px;
-    margin: 0 auto;
-  }
-  h2 {
-    font: 800 24px/1.2 'Open Sans', sans-serif;
-  }
-
-    h2 a, h2 a:visited {
-      margin-left: -24px;
-      margin-right: 4px;
-      text-decoration: none;
-      font-weight: 400;
-      color: #FFF;
-    }
-      h2:hover a, h3:hover a {
-        color: #99F;
-      }
-
-  p, ul {
-    font: 18px/1.2 'Open Sans', sans-serif;
-  }
-  li {
-    margin: 0 0 20px 20px;
-  }
-  section {
-    max-width:750px;
-    margin: 1em auto;
-    background: #111;
-  }
-
-  h3 {
-    color: #FFF;
-    font-family: 'Roboto Slab', 'Sans Serif';
-    font-weight: 100;
-    font-size: 22px;
-    margin: 0;
-    padding: 0.5em;
-  }
-    h3 a {
-      color: #FFF;  
-    }
-
-  table {
-    width: 100%;
-    text-align: center;
-  }
-  th {
-    font-family: 'Roboto Slab';
-    color: #FFF;
-    font-size: 
-  }
-  td {
-    font-family: 'Roboto Slab', 'Sans Serif';
-    font-weight: 500;
-    font-size: 40px;
-    color: #FFF;
-  }
-    td.passes-few  { color: #e57373; }
-    td.passes-some { color: #ffb74d; }
-    td.passes-many { color: #dce775; }
-    td.passes-most { color: #aed581; }
-    td.passes-all  { color: #81c784; }
-
-  footer {
-    background: black;
-    color: white;
-    margin: 1em 0 0 0;
-    padding: 1ch 2ch;
-    font: 15px/1.4 'Open Sans', sans-serif;
-    text-align: right;
-  }
-    footer a, footer a:visited {
-      font-family: monospace;
-      color: #52cbff;
-    }
-</style>
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com/" crossorigin>
+  <link href="/style.css" rel="stylesheet" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;800&family=Roboto+Slab:wght@100;500&display=swap" rel="stylesheet" crossorigin="anonymous">
 </head>
 <body>
   <h1>Web Mitigation Metrics</h1>
@@ -142,22 +70,7 @@
           Web Platform Tests:
           <a href="https://wpt.fyi/results/content-security-policy?label=master&label=experimental&aligned"><code>/content-security-policy</code></a>
         </h3>
-        <table>
-          <thead>
-            <tr>
-              {% for browser in wpt_data["csp"] %}
-              <th>{{ browser|capitalize }}</th>
-              {% endfor %}
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              {% for browser, item in wpt_data["csp"].items() %}
-              <td class="{{ itemToClass(item) | trim }}">{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
-              {% endfor %}
-            </tr>
-          </tbody>
-       </table>
+        {{ wpt("csp") }}
     </section>
   </article>
 
@@ -186,22 +99,7 @@
           Web Platform Tests: 
           <a href="https://wpt.fyi/results/trusted-types?label=master&label=experimental&aligned"><code>/trusted-types</code></a>
         </h3>
-        <table>
-          <thead>
-            <tr>
-              {% for browser in wpt_data["tt"] %}
-              <th>{{ browser|capitalize }}</th>
-              {% endfor %}
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              {% for browser, item in wpt_data["tt"].items() %}
-              <td class="{{ itemToClass(item) | trim }}">{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
-              {% endfor %}
-            </tr>
-          </tbody>
-       </table>
+        {{ wpt("tt") }}
     </section>
   </article>
 
@@ -230,60 +128,15 @@
           CORP:
           <a href="https://wpt.fyi/results/fetch/cross-origin-resource-policy?label=master&label=experimental&aligned"><code>/fetch/cross-origin-resource-policy</code></a>
         </h3>
-        <table>
-          <thead>
-            <tr>
-              {% for browser in wpt_data["corp"] %}
-              <th>{{ browser|capitalize }}</th>
-              {% endfor %}
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              {% for browser, item in wpt_data["corp"].items() %}
-              <td class="{{ itemToClass(item) | trim }}">{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
-              {% endfor %}
-            </tr>
-          </tbody>
-        </table>
+        {{ wpt("corp") }}
         <h3>
           COEP: <a href="https://wpt.fyi/results/html/cross-origin-embedder-policy?label=master&label=experimental&aligned"><code>/html/cross-origin-embedder-policy</code></a>
         </h3>
-        <table>
-          <thead>
-            <tr>
-              {% for browser in wpt_data["coep"] %}
-              <th>{{ browser|capitalize }}</th>
-              {% endfor %}
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              {% for browser, item in wpt_data["coep"].items() %}
-              <td class="{{ itemToClass(item) | trim }}">{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
-              {% endfor %}
-            </tr>
-          </tbody>
-       </table>
+        {{ wpt("coep") }}
         <h3>
           COOP:<a href="https://wpt.fyi/results/html/cross-origin-opener-policy?label=master&label=experimental&aligned"><code>/html/cross-origin-opener-policy</code></a>
         </h3>
-        <table>
-          <thead>
-            <tr>
-              {% for browser in wpt_data["coop"] %}
-              <th>{{ browser|capitalize }}</th>
-              {% endfor %}
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              {% for browser, item in wpt_data["coop"].items() %}
-              <td class="{{ itemToClass(item) | trim }}">{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
-              {% endfor %}
-            </tr>
-          </tbody>
-       </table>
+        {{ wpt("coop") }}
     </section>
   </article>
 
@@ -315,22 +168,7 @@
           Web Platform Tests:
           <a href="https://wpt.fyi/results/subresource_integrity/?label=master&label=experimental&aligned"><code>/subresource_integrity</code></a>
         </h3>
-        <table>
-          <thead>
-            <tr>
-              {% for browser in wpt_data["sri"] %}
-              <th>{{ browser|capitalize }}</th>
-              {% endfor %}
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              {% for browser, item in wpt_data["sri"].items() %}
-              <td class="{{ itemToClass(item) | trim }}">{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
-              {% endfor %}
-            </tr>
-          </tbody>
-       </table>
+        {{ wpt("sri") }}
     </section>
   </article>
 
@@ -361,22 +199,7 @@
           Web Platform Tests:
           <a href="https://wpt.fyi/results/?label=master&label=experimental&aligned&q=sandbox"><code>?"sandbox"</code></a>
         </h3>
-        <table>
-          <thead>
-            <tr>
-              {% for browser in wpt_data["sandbox"] %}
-              <th>{{ browser|capitalize }}</th>
-              {% endfor %}
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              {% for browser, item in wpt_data["sandbox"].items() %}
-              <td class="{{ itemToClass(item) | trim }}">{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
-              {% endfor %}
-            </tr>
-          </tbody>
-       </table>
+        {{ wpt("sandbox") }}
     </section>
   </article>
 
@@ -400,22 +223,7 @@
           Web Platform Tests:
           <a href="https://wpt.fyi/results/fetch/metadata?label=master&label=experimental&aligned"><code>/fetch/metadata</code></a>
         </h3>
-        <table>
-          <thead>
-            <tr>
-              {% for browser in wpt_data["fetch-metadata"] %}
-              <th>{{ browser|capitalize }}</th>
-              {% endfor %}
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              {% for browser, item in wpt_data["fetch-metadata"].items() %}
-              <td class="{{ itemToClass(item) | trim }}">{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
-              {% endfor %}
-            </tr>
-          </tbody>
-       </table>
+        {{ wpt("fetch-metadata") }}
     </section>
   </article>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous" nonce="not-really-a-nonce"></script>
@@ -424,6 +232,29 @@
     const colors = { red: "#e41a1c", blue: "#377eb8", green: "#4daf4a", orange: "#ff7f00", purple: "#984ea3" };
     const use_counter_days = {{ use_counter_days|tojson }};
     const use_counter_buckets = {{ use_counter_buckets|tojson }}
+
+    // Vertical lines for Chrome milestones:
+    const milestones = { 'M87': '2020-11-17', 'M86': '2020-10-06' };
+    const annotations = Object.entries(milestones).map(([m, date]) => {
+      return {
+        id: m,
+        type: 'line',
+        mode: 'vertical',
+        scaleID: 'x-axis-0',
+        value: use_counter_days.find(v => v == date),
+        borderColor: colors["orange"],
+        borderWidth: 1,
+        label: {
+          backgroundColor: colors["orange"],
+          content: m,
+          enabled: true,
+          position: "bottom",
+          yAdjust: 5
+        }
+      };
+    });
+
+    // Configure chart options:
     const chart_options = {
       scales: {
         yAxes: [
@@ -439,201 +270,106 @@
           }
         ]
       },
-      annotation: {
-        annotations: [{
-          id: 'm84',
-          type: 'line',
-          mode: 'vertical',
-          scaleID: 'x-axis-0',
-          value: use_counter_days.find(v => v == "2020-07-14"),
-          borderColor: colors["orange"],
-          borderWidth: 1,
-          label: {
-            backgroundColor: colors["orange"],
-            content: 'M84',
-            enabled: true,
-            position: "bottom",
-            yAdjust: 5
-          }
-        }, {
-          id: 'm87',
-          type: 'line',
-          mode: 'vertical',
-          scaleID: 'x-axis-0',
-          value: use_counter_days.find(v => v == "2020-11-17"),
-          borderColor: colors["orange"],
-          borderWidth: 1,
-          label: {
-            backgroundColor: colors["orange"],
-            content: 'M87',
-            enabled: true,
-            position: "bottom",
-            yAdjust: 5
-          }
-        }, {
-          id: 'm86',
-          type: 'line',
-          mode: 'vertical',
-          scaleID: 'x-axis-0',
-          value: use_counter_days.find(v => v == "2020-10-06"),
-          borderColor: colors["orange"],
-          borderWidth: 1,
-          label: {
-            backgroundColor: colors["orange"],
-            content: 'M86',
-            enabled: true,
-            position: "bottom",
-            yAdjust: 5
-          }
-        }, {
-          id: 'm85',
-          type: 'line',
-          mode: 'vertical',
-          scaleID: 'x-axis-0',
-          value: use_counter_days.find(v => v == "2020-08-25"),
-          borderColor: colors["orange"],
-          borderWidth: 1,
-          label: {
-            backgroundColor: colors["orange"],
-            content: 'M85',
-            enabled: true,
-            position: "bottom",
-            yAdjust: 5
-          }
-        }]
-      }
+      annotation: { annotations: annotations }
     };
 
-    let csp_chart = new Chart(document.querySelector('#csp_usage').getContext('2d'), {
-      type: "line",
-      data: {
-        labels: use_counter_days,
-        datasets: [
-          {
+    // Configure charts:
+    const charts = [{
+        id: "csp_usage",
+        data: [{
             label: "All CSP",
-            borderColor: colors["red"],
-            data: use_counter_buckets["15"]
-          },
-          {
+            color: "red",
+            useCounter: 15
+          }, {
             label: "Strict CSP",
-            borderColor: colors["blue"],
-            data: use_counter_buckets["3132"]
-          },
-          {
+            color: "blue",
+            useCounter: 3132
+          }, {
             label: "Stricter CSP",
-            borderColor: colors["green"],
-            data: use_counter_buckets["3137"]
-          }
-        ]
-      },
-      options: chart_options
-    });
-
-    let tt_chart = new Chart(document.querySelector('#tt_usage').getContext('2d'), {
-      type: "line",
-      data: {
-        labels: use_counter_days,
-        datasets: [
-          {
+            color: "green",
+            useCounter: 3137
+          }]
+      }, {
+        id: "tt_usage",
+        data: [{
             label: "Trusted Types",
-            borderColor: colors["red"],
-            data: use_counter_buckets["2722"]
-          },
-          {
+            color: "red",
+            useCounter: 2722
+          }, {
             label: "Report-Only",
-            borderColor: colors["blue"],
-            data: use_counter_buckets["3161"]
-          },
-          {
+            color: "blue",
+            useCounter: 3161
+          }, {
             label: "Enforced",
-            borderColor: colors["green"],
-            data: use_counter_buckets["3160"]
-          }
-        ]
-      },
-      options: chart_options
-    });
-
-    let tt_creation = new Chart(document.querySelector('#tt_creation').getContext('2d'), {
-      type: "line",
-      data: {
-        labels: use_counter_days,
-        datasets: [
-          {
+            color: "green",
+            useCounter: 3160
+          }]
+      }, {
+        id: "tt_creation",
+        data: [{
             label: "Policy Creation",
-            borderColor: colors["red"],
-            data: use_counter_buckets["2723"]
-          }
-        ]
-      },
-      options: chart_options
-
-    });
-
-    let sri_usage = new Chart(document.querySelector('#sri_usage').getContext('2d'), {
-      type: "line",
-      data: {
-        labels: use_counter_days,
-        datasets: [
-          {
-            label: "SRI Validated Resource",
-            borderColor: colors["green"],
-            data: use_counter_buckets["540"]
-          },
-          {
+            color: "red",
+            useCounter: 2723
+          }]
+      }, {
+        id: "sri_usage",
+        data: [{
             label: "SRI Blocked Resource",
-            borderColor: colors["red"],
-            data: use_counter_buckets["541"]
-          },
-        ]
-      },
-      options: chart_options
-    });
-
-    let sandbox_usage = new Chart(document.querySelector('#sandbox_usage').getContext('2d'), {
-      type: "line",
-      data: {
-        labels: use_counter_days,
-        datasets: [
-          {
+            color: "red",
+            useCounter: 541
+          }, {
+            label: "SRI Validated Resource",
+            color: "green",
+            useCounter: 540
+          }]
+      }, {
+        id: "sandbox_usage",
+        data: [{
             label: "Sandbox via IFrame",
-            borderColor: colors["green"],
-            data: use_counter_buckets["672"]
-          },
-          {
+            color: "blue",
+            useCounter: 672
+          }, {
             label: "Sandbox via CSP",
-            borderColor: colors["red"],
-            data: use_counter_buckets["673"]
-          },
-        ]
-      },
-      options: chart_options
-
-    });
-
-    let coop_coep_chart = new Chart(document.querySelector('#coop_coep_usage').getContext('2d'), {
-      type: "line",
-      data: {
-        labels: use_counter_days,
-        datasets: [
-          {
+            color: "green",
+            useCounter: 673
+          }]
+      }, {
+        id: "coop_coep_usage",
+        data: [{
             label: "COOP: same-origin",
-            borderColor: colors["red"],
-            data: use_counter_buckets["3197"]
-          },
-          {
+            color: "blue",
+            useCounter: 3197
+          }, {
+            label: "COOP: same-origin-allow-popups",
+            color: "green",
+            useCounter: 3198
+          }, {
             label: "COEP: require-corp",
-            borderColor: colors["blue"],
-            data: use_counter_buckets["3199"]
-          },
-          {
+            color: "red",
+            useCounter: 3199
+          }, {
             label: "Cross-Origin Isolated",
-            borderColor: colors["green"],
-            data: use_counter_buckets["3200"]
-          }
-        ]
-      },
-      options: chart_options
+            color: "purple",
+            useCounter: 3200
+          }]
+      }
+    ];
+
+    charts.forEach(c => {
+      new Chart(c.id, {
+        type: "line",
+        options: chart_options,
+        data: {
+          labels: use_counter_days,
+          datasets: c.data.map(d => {
+            return {
+              label: d.label,
+              borderColor: colors[d.color],
+              data: use_counter_buckets[d.useCounter + ""]
+            };
+          })
+        }
+      });
     });
   </script>
   <footer>

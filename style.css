@@ -1,0 +1,89 @@
+  body, html {
+    border: 0;
+    margin: 0;
+    padding: 0;
+  }
+  h1 {
+    background: black;
+    color: white;
+    font: 100 40px/1.2 'Roboto Slab', sans-serif;
+    margin: 0 0 40px 0;
+    padding: 40px;
+    text-align: right;
+  }
+  article {
+    max-width: 750px;
+    margin: 0 auto;
+  }
+  h2 {
+    font: 800 24px/1.2 'Open Sans', sans-serif;
+  }
+
+    h2 a, h2 a:visited {
+      margin-left: -24px;
+      margin-right: 4px;
+      text-decoration: none;
+      font-weight: 400;
+      color: #FFF;
+    }
+      h2:hover a, h3:hover a {
+        color: #99F;
+      }
+
+  p, ul {
+    font: 18px/1.2 'Open Sans', sans-serif;
+  }
+  li {
+    margin: 0 0 20px 20px;
+  }
+  section {
+    max-width:750px;
+    margin: 1em auto;
+    background: #111;
+  }
+
+  h3 {
+    color: #FFF;
+    font-family: 'Roboto Slab', 'Sans Serif';
+    font-weight: 100;
+    font-size: 22px;
+    margin: 0;
+    padding: 0.5em;
+  }
+    h3 a {
+      color: #FFF;  
+    }
+
+  table {
+    width: 100%;
+    text-align: center;
+  }
+  th {
+    font-family: 'Roboto Slab';
+    color: #FFF;
+    font-size: 
+  }
+  td {
+    font-family: 'Roboto Slab', 'Sans Serif';
+    font-weight: 500;
+    font-size: 40px;
+    color: #FFF;
+  }
+    td.passes-few  { color: #e57373; }
+    td.passes-some { color: #ffb74d; }
+    td.passes-many { color: #dce775; }
+    td.passes-most { color: #aed581; }
+    td.passes-all  { color: #81c784; }
+
+  footer {
+    background: black;
+    color: white;
+    margin: 1em 0 0 0;
+    padding: 1ch 2ch;
+    font: 15px/1.4 'Open Sans', sans-serif;
+    text-align: right;
+  }
+    footer a, footer a:visited {
+      font-family: monospace;
+      color: #52cbff;
+    }
