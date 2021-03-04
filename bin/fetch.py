@@ -15,6 +15,7 @@ use_counters = {
     'CrossOriginOpenerPolicySameOriginAllowPopups': 3198,
     'CrossOriginEmbedderPolicyRequireCorp': 3199,
     'CoopAndCoepIsolated': 3200,
+    'CoopReportOnly': 3433,
 
     'ContentSecurityPolicy': 15,
     'CSPWithReasonableRestrictions': 3132,
