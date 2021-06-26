@@ -11,26 +11,36 @@ from jinja2 import Environment, FileSystemLoader
 # data that can be passed to the template.
 #
 use_counters = {
+    # COOP
     'CrossOriginOpenerPolicySameOrigin': 3197,
     'CrossOriginOpenerPolicySameOriginAllowPopups': 3198,
-    'CrossOriginEmbedderPolicyRequireCorp': 3199,
-    'CoopAndCoepIsolated': 3200,
     'CoopReportOnly': 3433,
 
+    # COEP
+    'CrossOriginEmbedderPolicyCredentialless': 3881,
+    'CrossOriginEmbedderPolicyRequireCorp': 3199,
+
+    # COI
+    'CoopAndCoepIsolated': 3200,
+
+    # CSP
     'ContentSecurityPolicy': 15,
     'CSPWithReasonableRestrictions': 3132,
     'CSPWithBetterThanReasonableRestrictions': 3137,
     'CSPEE': 3274,
 
+    # TrustedType
     'TrustedTypesEnabled': 2722,
     'TrustedTypesEnabledEnforcing': 3160,
     'TrustedTypesEnabledReportOnly': 3161,
     'TrustedTypesPolicyCreated': 2723,
     'TrustedTypesDefaultPolicyCreated': 2724,
 
+    # SRI
     'SRIAllowed': 540,
     'SRIBlocked': 541,
-    
+
+    # Sandbox
     'SandboxViaIFrame': 672,
     'SandboxViaCSP': 673
 }
