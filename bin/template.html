@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 {% macro itemToClass(item) -%}
-  {% if (item["passed"] / item["total"]) < 0.25 %}
+  {% if item["percent"] < 0.25 %}
   passes-few
-  {% elif (item["passed"] / item["total"]) < 0.50 %}
+  {% elif item["percent"] < 0.50 %}
   passes-some
-  {% elif (item["passed"] / item["total"]) < 0.75 %}
+  {% elif item["percent"] < 0.75 %}
   passes-many
-  {% elif (item["passed"] / item["total"]) < 0.95 %}
+  {% elif item["percent"] < 0.95 %}
   passes-most
   {% else %}
   passes-all
@@ -24,7 +24,7 @@
           <tbody>
             <tr>
               {% for browser, item in wpt_data[feature].items() %}
-              <td class="{{ itemToClass(item) | trim }}">{{ "{:.2%}".format(item["passed"] / item["total"]) }}</td>
+              <td class="{{ itemToClass(item) | trim }}">{{ "{:.2%}".format(item["percent"]) }}</td>
               {% endfor %}
             </tr>
           </tbody>
@@ -226,10 +226,28 @@
         {{ wpt("fetch-metadata") }}
     </section>
   </article>
+
+  <article>
+    <h2 id="sanitizer-api">
+      <a href="#sanitizer-api">§</a>
+      HTML Sanitizer API
+    </h2>
+    <p>
+      TODO: Describe this.
+    </p>
+
+    <section>
+        <h3>
+          Web Platform Tests:
+          <a href="https://wpt.fyi/results/sanitizer-api?label=master&label=experimental&aligned"><code>/sanitizer-api</code></a>
+        </h3>
+        {{ wpt("sanitizer") }}
+    </section>
+  </article>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous" nonce="not-really-a-nonce"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@0.5.7/chartjs-plugin-annotation.min.js" integrity="sha256-Olnajf3o9kfkFGloISwP1TslJiWUDd7IYmfC+GdCKd4=" crossorigin="anonymous" nonce="not-really-a-nonce"></script>
   <script nonce="not-really-a-nonce">
-    const colors = { red: "#e41a1c", blue: "#377eb8", green: "#4daf4a", orange: "#ff7f00", purple: "#984ea3", yellow: "#f6bf26" };
+    const colors = { deepSkyBlue: "#00bfff", orange: "#ff5400", limeGreen: "#32cd32", purple: "#984ea3", crimson: "#dc143c", steelBlue: "#4682b4", brown: "#a52a2a" };    
     const use_counter_days = {{ use_counter_days|tojson }};
     const use_counter_buckets = {{ use_counter_buckets|tojson }}
 
@@ -269,6 +287,9 @@
             }
           }
         ]
+      },
+      animation: {
+        duration: 0
       },
       annotation: { annotations: annotations }
     };
@@ -373,10 +394,10 @@
         options: chart_options,
         data: {
           labels: use_counter_days,
-          datasets: c.data.map(d => {
+          datasets: c.data.map((d, i) => {
             return {
               label: d.label,
-              borderColor: colors[d.color],
+              borderColor: colors[Object.keys(colors)[i]],
               data: use_counter_buckets[d.useCounter + ""]
             };
           })
