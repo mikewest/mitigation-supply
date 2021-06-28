@@ -87,3 +87,8 @@
       font-family: monospace;
       color: #52cbff;
     }
+
+canvas {
+  width: 750px;
+  height: 375px;
+}

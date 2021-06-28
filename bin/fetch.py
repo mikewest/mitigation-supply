@@ -71,7 +71,8 @@ wpt_data = {
     "fetch-metadata": {},
     "tt":   {},
     "sri":  {},
-    "sandbox": {}
+    "sandbox": {},
+    "sanitizer": {},
 }
 
 def getWPTRunIDs():
@@ -91,7 +92,7 @@ browser_labels = []
 for item in search_data["runs"]:
     browser_labels.append(item["browser_name"])
     for test_type in wpt_data.keys():
-        wpt_data[test_type][item["browser_name"]] = { "passed": 0, "total": 0 }
+        wpt_data[test_type][item["browser_name"]] = { "passed": 0, "total": 0, "percent": 0 }
 
 for item in search_data["results"]:
     test_type = None
@@ -109,6 +110,8 @@ for item in search_data["results"]:
         test_type = "tt"
     elif item["test"].startswith("/subresource-integrity/"):
         test_type = "sri"
+    elif item["test"].startswith("/sanitizer-api/"):
+        test_type = "sanitizer"
     elif "sandbox" in item["test"].lower():
         test_type = "sandbox"
     else:
@@ -117,6 +120,12 @@ for item in search_data["results"]:
     for i, status in enumerate(item["legacy_status"]):
         wpt_data[test_type][browser_labels[i]]["passed"] += status["passes"]
         wpt_data[test_type][browser_labels[i]]["total"] += status["total"]
+        if wpt_data[test_type][browser_labels[i]]["total"] == 0:
+            wpt_data[test_type][browser_labels[i]]["percent"] = 0
+        else:
+            wpt_data[test_type][browser_labels[i]]["percent"] = (
+                wpt_data[test_type][browser_labels[i]]["passed"] /
+                wpt_data[test_type][browser_labels[i]]["total"])
 
 #
 # Step 3: Render some HTML.
