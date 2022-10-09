@@ -236,6 +236,8 @@
       The <a href="https://wicg.github.io/sanitizer-api/">HTML Sanitizer API</a> allow developers to take untrusted strings of HTML, and sanitize them for safe insertion into a document’s DOM to minimize the risk of unintended script execution.
     </p>
 
+    <canvas id="sanitizer_usage"></canvas>
+
     <section>
         <h3>
           Web Platform Tests:
@@ -346,6 +348,17 @@
             label: "SRI Validated Resource",
             color: "green",
             useCounter: 540
+          }]
+      }, {
+        id: "sanitizer_usage",
+        data: [{
+            label: "Element.setHTML",
+            color: "blue",
+            useCounter: 3950
+          }, {
+            label: "new Sanitizer()",
+            color: "green",
+            useCounter: 3814
           }]
       }, {
         id: "sandbox_usage",

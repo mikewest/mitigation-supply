@@ -42,7 +42,11 @@ use_counters = {
 
     # Sandbox
     'SandboxViaIFrame': 672,
-    'SandboxViaCSP': 673
+    'SandboxViaCSP': 673,
+
+    # Sanitizer
+    'SanitizerAPIElementSetSanitized': 3950,
+    'SanitizerAPICreated': 3814
 }
 
 days = set()
